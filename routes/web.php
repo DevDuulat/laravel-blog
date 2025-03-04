@@ -16,3 +16,36 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/frontend/home', function () {
+    return view('frontend.home');
+});
+
+Route::get('/frontend/faq', function () {
+    return view('frontend.faq');
+});
+
+Route::get('/frontend/login', function () {
+    return view('frontend.login');
+});
+
+Route::get('/frontend/register', function () {
+    return view('frontend.register');
+});
+
+Route::get('/frontend/posts', function () {
+    return view('frontend.posts');
+});
+
+Route::get('/frontend/posts', function () {
+    return view('frontend.post');
+});
+
+Route::get('/frontend/test', function () {
+    return view('frontend.test');
+});
+
+Route::get('/frontend/categories', function () {
+    return view('frontend.categories');
+});
+
