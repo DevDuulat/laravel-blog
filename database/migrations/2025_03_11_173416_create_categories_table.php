@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('banner_image')->nullable();
-            $table->enum('category_type', ['posts', 'pages']);
+            $table->enum('category_type', ['post', 'page']);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

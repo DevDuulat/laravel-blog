@@ -40,8 +40,8 @@ class CategoryResource extends Resource
                 Forms\Components\Select::make('category_type')
                     ->label('Тип категории')
                     ->options([
-                        'posts' => 'Посты',
-                        'pages' => 'Страницы',
+                        'post' => 'Посты',
+                        'page' => 'Страницы',
                     ])
                     ->required()
                     ->default('posts')
@@ -60,14 +60,18 @@ class CategoryResource extends Resource
                     ->label('Slug')
                     ->required()
                     ->maxLength(255)
-                    ->rules([
-                        Rule::unique(Category::class, 'slug'),
-                    ])
+                    ->rules(function (callable $get) {
+                        $id = $get('id');
+                        return [
+                            Rule::unique(Category::class, 'slug')->ignore($id),
+                        ];
+                    })
                     ->validationMessages([
                         'unique' => 'Этот slug уже существует. Пожалуйста, выберите другое название категории.',
                     ]),
 
-                Forms\Components\FileUpload::make('banner_image')
+
+        Forms\Components\FileUpload::make('banner_image')
                     ->label('Баннер')
                     ->image(),
 

@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('content', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->uuid('category_id')->nullable();
+            $table->enum('type', ['post', 'page']);
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->text('content');
+            $table->string('cover')->nullable();
+            $table->string('banner_image')->nullable();
+            $table->enum('status', ['draft', 'published', 'archived'])->default('draft');
+            $table->timestamp('published_at')->nullable();
+            $table->integer('likes_count')->default(0);
+            $table->integer('comments_count')->default(0);
+            $table->string('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->text('meta_keywords')->nullable();
+            $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('content');
+    }
+};
