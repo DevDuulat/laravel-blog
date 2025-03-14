@@ -128,17 +128,6 @@ class ContentResource extends Resource
                             ->columnSpanFull()
                             ->required(),
                     ]),
-
-                Forms\Components\Section::make('Дополнительные настройки')
-                    ->schema([
-                        Forms\Components\Textarea::make('related_content')
-                            ->label('Связанный контент')
-                            ->columnSpanFull(),
-
-                        Forms\Components\Textarea::make('settings')
-                            ->label('Настройки')
-                            ->columnSpanFull(),
-                    ]),
             ]);
     }
 
