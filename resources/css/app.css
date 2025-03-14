@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @source "../views";
+
+@layer base {
+    .container {
+        max-width: 1280px !important;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}

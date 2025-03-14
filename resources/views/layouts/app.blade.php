@@ -8,7 +8,7 @@
     @livewireStyles
 </head>
 <body>
-
+@include('components.header')
 @yield('content')
 
 @livewireScripts

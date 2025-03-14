@@ -1,13 +1,14 @@
 <header class="bg-blue-950 fixed top-0 inset-x-0 z-10">
     <div class="container flex justify-between items-center py-5 text-white">
-        <a href="index.html" class="text-md sm:text-xl font-semibold">Автошкола</a>
+        <a href="{{ route('home') }}" class="text-md sm:text-xl font-semibold">Автошкола</a>
 
         <nav class="hidden lg:block">
             <ul class="flex gap-8 text-[18px] font-semibold">
                 <li>
-                    <a href="index.html" class="boredr hover:text-orange-400 hover:border-b-2"
-                    >Главная</a
-                    >
+                    <a href="{{ route('home') }}" class="hover:text-orange-400 hover:border-b-2">
+                        Главная
+                    </a>
+
                 </li>
                 <li>
                     <a href="#" class="boredr hover:text-orange-400 hover:border-b-2"
@@ -15,7 +16,7 @@
                     >
                 </li>
                 <li>
-                    <a href="#" class="boredr hover:text-orange-400 hover:border-b-2"
+                    <a href="{{ route('posts.index') }}" class="boredr hover:text-orange-400 hover:border-b-2"
                     >Блог</a
                     >
                 </li>
