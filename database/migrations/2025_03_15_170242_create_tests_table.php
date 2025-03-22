@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('tests', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('parent_id')->nullable();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('banner_image')->nullable();
-            $table->enum('category_type', ['post', 'page', 'test'])->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->uuid('category_id');
+            $table->string('title');
+            $table->integer('duration');
+            $table->string('image')->nullable();
+            $table->string('video')->nullable();
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('tests');
     }
 };

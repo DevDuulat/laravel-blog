@@ -12,22 +12,20 @@ class Category extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = [
-        'parent_id',
-        'category_type',
-        'name',
-        'slug',
-        'banner_image',
-        'is_active',
-    ];
+    protected $fillable = ['parent_id', 'name', 'slug', 'banner_image', 'category_type', 'is_active'];
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function children(): HasMany
+    public function tests(): HasMany
     {
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(Test::class);
     }
 }

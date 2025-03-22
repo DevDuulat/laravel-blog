@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('parent_id')->nullable();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->string('banner_image')->nullable();
-            $table->enum('category_type', ['post', 'page', 'test'])->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->uuid('question_id');
+            $table->text('answer');
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('answers');
     }
 };

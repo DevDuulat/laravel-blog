@@ -42,12 +42,14 @@ class CategoryResource extends Resource
                     ->options([
                         'post' => 'Посты',
                         'page' => 'Страницы',
+                        'test' => 'Тесты',
                     ])
                     ->required()
                     ->default('posts')
-                    ->disabled(fn (callable $get) => !is_null($get('parent_id'))),
+                    ->hidden(fn (callable $get) => !is_null($get('parent_id'))),
 
-                Forms\Components\TextInput::make('name')
+
+        Forms\Components\TextInput::make('name')
                     ->label('Название')
                     ->required()
                     ->maxLength(255)
