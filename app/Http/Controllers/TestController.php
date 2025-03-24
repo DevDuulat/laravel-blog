@@ -49,18 +49,23 @@ class TestController extends Controller
     public function result($testId)
     {
         $test = Test::findOrFail($testId);
-
-
         $questions = $test->questions;
+
+        $userAnswers = session('test_answers', []);
+
         $correctAnswers = 0;
         foreach ($questions as $question) {
-            $correctAnswers += $question->answers()->where('is_correct', true)->count();
+            if (isset($userAnswers[$question->id]) && $userAnswers[$question->id]['correct']) {
+                $correctAnswers++;
+            }
         }
 
         $totalQuestions = $questions->count();
 
         return view('test.result', compact('test', 'correctAnswers', 'totalQuestions'));
     }
+
+
 
 
     public function retry($testId)

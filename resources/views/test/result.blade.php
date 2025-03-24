@@ -3,7 +3,8 @@
 @section('content')
     <div class="flex flex-col items-center justify-center gap-6 p-5 bg-gray-200">
 
-        <div class="flex flex-col items-center gap-4">
+
+        <div class="flex flex-col mt-24 items-center gap-4">
             <h4 class="text-xl">Результат теста</h4>
             <p class="text-lg">Вы ответили правильно на <span class="font-bold">{{ $correctAnswers }}</span> из <span class="font-bold">{{ $totalQuestions }}</span> вопросов</p>
         </div>

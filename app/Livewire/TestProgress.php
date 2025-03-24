@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Livewire;
 
 use App\Models\Test;
@@ -17,16 +16,7 @@ class TestProgress extends Component
     {
         $this->test = $test;
         $this->questions = $test->questions()->with('answers')->get();
-    }
-
-    public function nextQuestion()
-    {
-        if ($this->currentQuestionIndex < $this->questions->count() - 1) {
-            $this->currentQuestionIndex++;
-        } else {
-            return redirect()->route('test.result', ['testId' => $this->test->id]);
-
-        }
+        Session::forget('test_answers');
     }
 
     public function submitAnswer()
@@ -35,18 +25,48 @@ class TestProgress extends Component
 
         $correctAnswers = $question->answers()->where('is_correct', true)->pluck('id')->toArray();
 
-        $isCorrect = empty(array_diff($this->selectedAnswers, $correctAnswers)) &&
-            empty(array_diff($correctAnswers, $this->selectedAnswers));
+        $selected = array_map('intval', $this->selectedAnswers);
+        $correctAnswers = array_map('intval', $correctAnswers);
 
-        Session::push('test_answers', [
+        sort($selected);
+        sort($correctAnswers);
+
+        $isCorrect = ($selected === $correctAnswers);
+
+        $answers = Session::get('test_answers', []);
+        $answers[$question->id] = [
             'question_id' => $question->id,
-            'selected' => $this->selectedAnswers,
+            'selected' => $selected,
             'correct' => $isCorrect
-        ]);
+        ];
+        Session::put('test_answers', $answers);
 
         $this->selectedAnswers = [];
 
         $this->nextQuestion();
+    }
+
+
+    public function nextQuestion()
+    {
+        if ($this->currentQuestionIndex < $this->questions->count() - 1) {
+            $this->currentQuestionIndex++;
+        } else {
+            return $this->redirectToResults();
+        }
+    }
+
+    private function redirectToResults()
+    {
+        $answers = Session::get('test_answers', []);
+        $correctCount = collect($answers)->where('correct', true)->count();
+        $totalQuestions = $this->questions->count();
+
+        return redirect()->route('test.result', [
+            'testId' => $this->test->id,
+            'correctAnswers' => $correctCount,
+            'totalQuestions' => $totalQuestions
+        ]);
     }
 
     public function render()
@@ -55,5 +75,5 @@ class TestProgress extends Component
             'question' => $this->questions[$this->currentQuestionIndex]
         ]);
     }
-
 }
+
