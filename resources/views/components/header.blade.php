@@ -21,7 +21,7 @@
                     >
                 </li>
                 <li>
-                    <a href="#" class="boredr hover:text-orange-400 hover:border-b-2"
+                    <a href="{{ route('categories') }}" class="boredr hover:text-orange-400 hover:border-b-2"
                     >Онлайн тест</a
                     >
                 </li>

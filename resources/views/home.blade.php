@@ -12,12 +12,12 @@
             </p>
             <div class="flex justify-center sm:justify-start gap-2 sm:gap-4">
                 <a
-                    href="сategories-test.html"
+                    href="{{ route('categories') }}"
                     class=" px-3 py-2  sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black"
                 >Начать тест</a
                 >
                 <a
-                    href="posts.html"
+                    href="{{ route('posts.index') }}"
                     class="px-3 py-2  sm:px-5 sm:py-2  text-black font-semibold border border-orange-400 rounded-xl hover:bg-orange-400 hover:text-white "
                 >Читать блог</a
                 >
@@ -111,7 +111,7 @@
                                 </svg>
                             </summary>
                             <p class="mt-4 px-4 leading-relaxed text-gray-700">
-                                {!! nl2br(e($faq->answer)) !!} <!-- Форматирование текста с переносами строк -->
+                                {!! nl2br(e($faq->answer)) !!}
                             </p>
                         </details>
                     @endforeach
