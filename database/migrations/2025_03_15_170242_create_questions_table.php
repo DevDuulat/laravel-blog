@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('question');
             $table->string('image')->nullable();
             $table->string('video')->nullable();
+            $table->text('explanation')->nullable()->after('question');
             $table->timestamps();
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
         });

@@ -7,9 +7,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body>
+<body class="pt-20">
 @include('components.header')
-@yield('content')
+
+<div class="flex flex-col min-h-screen">
+    <main class="flex-grow">
+        @yield('content')
+    </main>
+</div>
+
+@include('components.footer')
 
 @livewireScripts
 </body>

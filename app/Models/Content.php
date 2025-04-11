@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Content extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, HasTranslations;
 
     protected $table = 'content';
 
@@ -27,11 +28,19 @@ class Content extends Model
         'meta_title',
         'meta_description',
         'meta_keywords',
-
     ];
 
     protected $casts = [
         'published_at' => 'datetime',
+    ];
+
+    public $translatable = [
+        'title',
+        'slug',
+        'content',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
     ];
 
     public function category()

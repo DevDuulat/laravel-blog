@@ -3,15 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\QuestionResource\Pages;
-use App\Filament\Resources\QuestionResource\RelationManagers;
 use App\Models\Question;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class QuestionResource extends Resource
 {
@@ -25,13 +27,47 @@ class QuestionResource extends Resource
             ->schema([
                 Forms\Components\Select::make('test_id')
                     ->relationship('test', 'title')
-                    ->required(),
-                Forms\Components\Textarea::make('question')
                     ->required()
-                    ->columnSpanFull(),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\TextInput::make('video'),
+                    ->label('Тест'),
+
+                // 🔥 Repeater для ВОПРОСОВ
+                Repeater::make('questions_data')
+                    ->label('Вопросы')
+                    ->schema([
+                        Textarea::make('question')
+                            ->label('Вопрос')
+                            ->required()
+                            ->columnSpanFull(),
+
+                        Textarea::make('explanation')
+                            ->label('Пояснение')
+                            ->rows(3),
+
+                        FileUpload::make('image')
+                            ->label('Изображение')
+                            ->image(),
+
+                        TextInput::make('video')
+                            ->label('Видео'),
+
+                        // 🔥 Repeater для ОТВЕТОВ
+                        Repeater::make('answers')
+                            ->label('Ответы')
+                            ->schema([
+                                Textarea::make('answer')
+                                    ->label('Ответ')
+                                    ->required(),
+                                Toggle::make('is_correct')
+                                    ->label('Правильный?')
+                                    ->default(false),
+                            ])
+                            ->minItems(4)
+                            ->maxItems(4)
+                            ->columns(1),
+                    ])
+                    ->columnSpanFull()
+                    ->defaultItems(1) // чтобы сразу был 1 вопрос при открытии формы
+                    ->itemLabel(fn ($state) => str($state['question'])->limit(20)),
             ]);
     }
 
@@ -40,37 +76,23 @@ class QuestionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('test.title')
+                    ->label('Тест')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('video')
+                Tables\Columns\TextColumn::make('question')
+                    ->label('Вопрос')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Создано')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

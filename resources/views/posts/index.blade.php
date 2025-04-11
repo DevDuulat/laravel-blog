@@ -1,31 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="pt-30">
-        <div class="container">
-            <div class="flex flex-col md:flex-row justify-between gap-8">
-                <div class="w-full md:w-2/3">
+    <section class="pt-10">
+        <div class="container mx-auto px-4 lg:px-16">
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-2/3 space-y-6">
                     @foreach($posts as $post)
-                        <a href="{{ route('posts.show', $post->slug) }}">
-                            <div
-                                class="flex flex-col lg:flex-row bg-gray-200 p-6 transition-transform duration-200 ease-in-out hover:-translate-y-[5px]">
-                                <div class="w-full h-50 lg:hidden block">
-                                    <img src="{{ asset('storage/' . $post->cover) }}" alt=""
-                                         class="object-cover w-full h-full"/>
+                        <a href="{{ route('posts.show', $post->slug) }}" class="block">
+                            <div class="flex flex-col lg:flex-row bg-white p-6 rounded-lg shadow-md transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+                                <div class="w-full h-48 lg:hidden">
+                                    <img src="{{ asset('storage/' . $post->cover) }}" alt="" class="object-cover w-full h-full rounded-lg"/>
                                 </div>
-                                <div class="flex flex-col gap-4">
-                                    <h3 class="text-2xl font-semibold">{{ $post->title }}</h3>
-                                    <p>{{ \Str::limit(strip_tags($post->content), 150) }}</p>
+                                <div class="flex flex-col gap-4 flex-1">
+                                    <h3 class="text-xl font-semibold text-gray-800">{{ $post->title }}</h3>
+                                    <p class="text-gray-600 text-sm">{{ \Str::limit(strip_tags($post->content), 150) }}</p>
                                 </div>
                                 <div class="w-1/2 hidden lg:block">
-                                    <img src="{{ asset('storage/' . $post->cover) }}" alt="">
+                                    <img src="{{ asset('storage/' . $post->cover) }}" alt="" class="object-cover w-full h-full rounded-lg">
                                 </div>
                             </div>
                         </a>
                     @endforeach
                 </div>
 
-                <div class="w-1/3 hidden md:block">
+                <div class="w-full md:w-1/3 hidden md:block space-y-4">
+                    <div class="bg-gray-100 h-48 rounded-lg shadow-md">
+                    </div>
                 </div>
             </div>
         </div>

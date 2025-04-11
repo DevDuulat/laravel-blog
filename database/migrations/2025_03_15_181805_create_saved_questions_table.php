@@ -12,14 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('saved_questions', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id')->index();
-            $table->uuid('question_id')->index();
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('question_id')->constrained('questions')->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
+
     }
 
     /**

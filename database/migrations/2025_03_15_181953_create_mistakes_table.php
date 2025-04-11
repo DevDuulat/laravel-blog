@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mistakes', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id')->index();
-            $table->uuid('question_id')->index();
-            $table->text('explanation')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('question_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

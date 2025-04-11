@@ -13,10 +13,13 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.6",
-        "shuvroroy/filament-spatie-laravel-backup": "^2.2"
+        "shuvroroy/filament-spatie-laravel-backup": "^2.2",
+        "spatie/laravel-translatable": "^6.11"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.15",
         "fakerphp/faker": "^1.9.1",
+        "laravel/breeze": "^1.29",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",

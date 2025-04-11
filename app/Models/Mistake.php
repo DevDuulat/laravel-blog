@@ -9,7 +9,7 @@ class Mistake extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'question_id', 'explanation'];
+    protected $fillable = ['user_id', 'question_id'];
 
     public function user()
     {

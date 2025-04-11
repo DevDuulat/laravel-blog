@@ -12,7 +12,8 @@ class Question extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['test_id', 'question', 'image', 'video'];
+    protected $fillable = ['test_id', 'question', 'explanation', 'image', 'video'];
+
 
 
     public function test(): BelongsTo

@@ -23,17 +23,32 @@ class AnswerResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('test_id')
+                    ->label('Выберите тест')
+                    ->relationship('question.test', 'title')
+                    ->required()
+                    ->reactive()
+
+                    ->afterStateUpdated(fn (callable $set) => $set('question_id', null)),
+
                 Forms\Components\Select::make('question_id')
-                    ->relationship('question', 'question')
+                    ->label('Выберите вопрос')
+                    ->options(fn (callable $get) =>
+                    \App\Models\Question::where('test_id', $get('test_id'))->pluck('question', 'id')
+                    )
                     ->required(),
 
                 Forms\Components\Textarea::make('answer')
+                    ->label('Ответ')
                     ->required()
                     ->columnSpanFull(),
+
                 Forms\Components\Toggle::make('is_correct')
+                    ->label('Правильный ответ?')
                     ->required(),
             ]);
     }
+
 
     public static function table(Table $table): Table
     {

@@ -11,7 +11,7 @@ class Answer extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['question_id', 'answer', 'is_correct'];
+    protected $fillable = ['question_id', 'answer', 'is_correct', 'group_index'];
 
 
     protected $casts = [

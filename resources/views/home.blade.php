@@ -1,122 +1,178 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="py-10 relative mt-20 sm:mb-0">
-    <div class="container flex items-center justify-between ">
-        <div class="flex flex-col gap-6 text-center sm:text-start">
-            <h1 class="text-3xl font-bold sm:text-5xl">Проверьте свои знания ПДД онлайн!</h1>
+    <section class="relative mt-20 sm:mb-0 bg-gradient-to-b from-white to-gray-50 py-12 sm:py-20">
+        <div class="container mx-auto px-4 lg:px-8 xl:px-16 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-12">
+            <div class="text-center sm:text-start flex flex-col gap-6 max-w-2xl">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+                    Проверьте свои знания <span class="text-orange-500">ПДД</span> онлайн!
+                </h1>
 
-            <p class="text-lg sm:text-2xl">
-                Проверьте свои знания ПДД онлайн! <br/>
-                Станьте уверенным водителем с нашими тестами и справочником
-            </p>
-            <div class="flex justify-center sm:justify-start gap-2 sm:gap-4">
-                <a
-                    href="{{ route('categories') }}"
-                    class=" px-3 py-2  sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black"
-                >Начать тест</a
-                >
-                <a
-                    href="{{ route('posts.index') }}"
-                    class="px-3 py-2  sm:px-5 sm:py-2  text-black font-semibold border border-orange-400 rounded-xl hover:bg-orange-400 hover:text-white "
-                >Читать блог</a
-                >
-            </div>
-        </div>
-        <div>
-            <img src="{{ asset('img/car.png') }}" alt="car" class="w-[800px] h-auto hidden sm:block"/>
-        </div>
-    </div>
-    </section>
+                <p class="text-lg sm:text-xl text-gray-600 leading-relaxed">
+                    Готовитесь к экзамену или хотите освежить знания? Наша платформа предлагает актуальные тесты и полезные материалы для водителей всех уровней.
+                </p>
 
-    <section class="py-10 relative mt-20 sm:mb-0">
-        <section class="py-15 bg-gray-200">
-            <div class="container  gap-6">
-                <h2 class="text-center mb-10 text-2xl font-semibold">ПДД КР 2025</h2>
-                <div class=" flex flex-col sm:flex-row flex-wrap items-center justify-center md:justify-around gap-5 xl:gap-1 ">
-                    <div class="flex flex-col gap-4 p-5 max-w-[280px] min-h-[250px] w-full text-center bg-white rounded-xl">
-                        <h2 class="text-md font-semibold ">ПДД КР 2024</h2>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit rerum incidunt, a
-                            consequuntur
-                            recusandae</p>
-                        <a href="#"
-                           class="px-3 py-2  sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black">Перейти</a>
-                    </div>
-                    <div class="flex flex-col gap-4 p-5 max-w-[280px] min-h-[250px] w-full text-center bg-white rounded-xl">
-                        <h2 class="text-md font-semibold ">Дорожные знаки</h2>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit rerum incidunt, a
-                            consequuntur
-                            recusandae</p>
-                        <a href="#"
-                           class="px-3 py-2  sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black">Перейти</a>
-                    </div>
-                    <div class="flex flex-col gap-4 p-5 max-w-[280px] min-h-[250px] w-full text-center bg-white rounded-xl">
-                        <h2 class="text-md font-semibold ">Дорожная разметка</h2>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa sit rerum incidunt, a
-                            consequuntur
-                            recusandae</p>
-                        <a href="#"
-                           class="px-3 py-2  sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black">Перейти</a>
-                    </div>
-                    <div class="flex flex-col gap-4 p-5 max-w-[280px] min-h-[250px] w-full text-center bg-white rounded-xl">
-                        <h2 class="text-md font-semibold ">Основные положения по допуску ТС к эксплуатации
-                            ПДД по темам</h2>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. </p>
-                        <a href="#"
-                           class="px-3 py-2   sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black">Перейти</a>
-                    </div>
-                </div>
+                <div class="flex flex-col sm:flex-row justify-center sm:justify-start gap-4 mt-4">
+                    <a href="{{ route('tests.index') }}"
+                       class="px-6 py-3 sm:px-8 sm:py-4 text-white font-semibold bg-orange-500 hover:bg-orange-600 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                        Начать тест
+                    </a>
 
-            </div>
-
-        </section>
-        <section class="py-15">
-            <div class="container flex flex-col gap-6">
-                <h3 class="text-center text-3xl mb-5 font-semibold">Блог новостей</h3>
-                <div class="flex flex-wrap items-center justify-around gap-5 lg:gap-1">
-                    @foreach ($posts as $post)
-                        <div class="flex flex-col gap-4 p-5 w-full md:max-w-[280px] items-center text-center bg-gray-200 rounded-xl">
-                            <img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}" class="w-full h-auto rounded">
-                            <h3 class="text-2xl">{{ $post->title }}</h3>
-                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->content), 150, '...') }}</p>
-
-                            <p class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($post->published_at)->format('d.m.Y') }}</p>
-                            <a href="{{ route('posts.show', $post->slug) }}"
-                               class="px-3 py-2 sm:px-5 sm:py-2 text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black w-full">
-                                Посмотреть
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="flex items-center justify-around gap-4 mt-5">
                     <a href="{{ route('posts.index') }}"
-                       class="px-3 py-2 sm:px-5 sm:py-2 text-center text-white font-semibold border border-orange-400 bg-orange-400 rounded-xl hover:bg-white hover:text-black w-50">
-                        Посмотреть все
+                       class="px-6 py-3 sm:px-8 sm:py-4 text-gray-700 font-semibold bg-white border border-gray-200 hover:border-orange-500 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+                        </svg>
+                        Читать блог
                     </a>
                 </div>
-            </div>
-        </section>
 
-
-        <section class="py-20 bg-gray-200">
-            <div class="container flex flex-col items-center justify-around gap-4">
-                <h3 class="text-center text-3xl mb-5">Справка FAQ</h3>
-                <div class="space-y-4 w-full lg:w-200">
-                    @foreach($faqs as $faq)
-                        <details class="group [&_summary::-webkit-details-marker]:hidden">
-                            <summary class="flex cursor-pointer items-center justify-between gap-1.5 rounded-lg bg-gray-50 p-4 text-gray-900">
-                                <h2 class="font-medium">{{ $faq->question }}</h2>
-                                <svg class="size-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </summary>
-                            <p class="mt-4 px-4 leading-relaxed text-gray-700">
-                                {!! nl2br(e($faq->answer)) !!}
-                            </p>
-                        </details>
-                    @endforeach
+                <div class="mt-4 flex flex-wrap justify-center sm:justify-start gap-3 text-sm text-gray-500">
+                    <div class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Актуальные билеты 2024
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Подробные объяснения
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Статистика результатов
+                    </div>
                 </div>
             </div>
-        </section>
+
+            <div class="hidden sm:block relative max-w-xl xl:max-w-2xl">
+                <img src="{{ asset('img/car.png') }}" alt="Автомобиль и дорожные знаки" class="w-full h-auto transform hover:scale-105 transition-transform duration-500"/>
+
+                <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div class="absolute -top-6 -right-6 w-32 h-32 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+    </style>
+
+    <section class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4 lg:px-16">
+            <h2 class="text-center text-3xl font-bold mb-12 text-gray-800">ПДД КР 2025</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ([
+                    ['title' => 'ПДД КР 2024', 'desc' => 'Актуальные правила дорожного движения Кыргызской Республики на 2024 год.', 'link' => '#'],
+                    ['title' => 'Дорожные знаки', 'desc' => 'Полный список дорожных знаков с пояснениями и изображениями.', 'link' => '#'],
+                    ['title' => 'Дорожная разметка', 'desc' => 'Интерактивный справочник дорожной разметки с примерами.', 'link' => '#'],
+                ] as $item)
+                    <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
+                        <div class="flex flex-col gap-3">
+                            <h3 class="text-lg font-bold text-gray-900">{{ $item['title'] }}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">{{ $item['desc'] }}</p>
+                        </div>
+                        <a href="{{ $item['link'] }}"
+                           class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
+                            Перейти
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 lg:px-16">
+            <h3 class="text-center text-3xl font-bold mb-12 text-gray-800">Блог новостей</h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($posts as $post)
+                    <div class="flex flex-col justify-between border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition">
+                        <div>
+                            @if($post->cover)
+                                <img src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}"
+                                     class="w-full h-44 object-cover rounded mb-3">
+                            @endif
+
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2 leading-snug">
+                                {{ $post->title }}
+                            </h4>
+
+                            <p class="text-sm text-gray-600 leading-relaxed">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 100, '...') }}
+                            </p>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
+                            <span>{{ \Carbon\Carbon::parse($post->published_at)->format('d.m.Y') }}</span>
+                            <a href="{{ route('posts.show', $post->slug) }}" class="text-orange-500 hover:underline font-medium">
+                                Читать →
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <!-- CTA блок -->
+            <div class="mt-16 text-center bg-orange-400 text-white py-10 rounded-lg shadow-md">
+                <h4 class="text-2xl font-semibold mb-4">Хотите получать новости первыми?</h4>
+                <p class="text-lg mb-6">Подпишитесь на наш новостной бюллетень, чтобы быть в курсе всех обновлений!</p>
+                <a href=""
+                   class="px-6 py-3 bg-white text-orange-500 font-semibold rounded-lg hover:bg-gray-200 transition">
+                    Подписаться
+                </a>
+            </div>
+
+            <div class="flex justify-center mt-12">
+                <a href="{{ route('posts.index') }}"
+                   class="text-sm text-orange-500 hover:underline font-medium">
+                    Посмотреть все статьи
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 lg:px-16 flex flex-col items-center">
+            <h3 class="text-center text-3xl font-semibold mb-8 text-gray-800">Справка FAQ</h3>
+
+            <div class="w-full lg:w-3/4 space-y-4">
+                @foreach($faqs as $faq)
+                    <details class="group bg-white rounded-lg shadow-md overflow-hidden">
+                        <summary class="flex justify-between items-center p-4 cursor-pointer text-gray-800 hover:bg-gray-100 transition-all">
+                            <h4 class="font-medium text-lg">{{ $faq->question }}</h4>
+                            <svg class="size-5 shrink-0 transition duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </summary>
+                        <p class="p-4 text-gray-700">{!! nl2br(e($faq->answer)) !!}</p>
+                    </details>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
 
 @endsection

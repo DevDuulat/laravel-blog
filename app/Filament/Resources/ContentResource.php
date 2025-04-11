@@ -39,7 +39,6 @@ class ContentResource extends Resource
                             ->default('post')
                             ->reactive()
                             ->afterStateUpdated(function (Set $set, $state) {
-
                                 $set('category_id', null);
                             })
                             ->columnSpan(2),
@@ -56,31 +55,49 @@ class ContentResource extends Resource
                             ->preload()
                             ->required()
                             ->columnSpan(2),
-                Forms\Components\TextInput::make('title')
-                            ->label('Заголовок')
-                            ->required()
-                            ->maxLength(255)
-                            ->live(onBlur: true)
-                            ->afterStateUpdated(function (Set $set, $state) {
-                                $set('slug', Str::slug($state));
-                            })
-                            ->columnSpan(2),
 
-                        Forms\Components\TextInput::make('slug')
-                            ->label('Slug')
-                            ->required()
-                            ->maxLength(255)
-                            ->rules([
-                                Rule::unique(Content::class, 'slug'),
-                            ])
-                            ->validationMessages([
-                                'unique' => 'Этот slug уже существует. Пожалуйста, выберите другое название категории.',
-                            ])
-                            ->columnSpan(2),
-
-                        Forms\Components\RichEditor::make('content')
-                            ->label('Контент')
-                            ->columnSpanFull(),
+                        Forms\Components\Tabs::make('Переводы')
+                            ->columnSpanFull()
+                            ->tabs([
+                                Forms\Components\Tabs\Tab::make('🇷🇺 RU')->schema([
+                                    Forms\Components\TextInput::make('title.ru')->label('Заголовок (RU)')
+                                        ->required()
+                                        ->maxLength(255)
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn(Set $set, $state) => $set('slug.ru', Str::slug($state))),
+                                    Forms\Components\TextInput::make('slug.ru')->label('Slug (RU)')
+                                        ->required()
+                                        ->maxLength(255),
+                                    Forms\Components\RichEditor::make('content.ru')->label('Контент (RU)'),
+                                    Forms\Components\TextInput::make('meta_title.ru')->label('Meta Title (RU)'),
+                                    Forms\Components\Textarea::make('meta_description.ru')->label('Meta Description (RU)'),
+                                    Forms\Components\Textarea::make('meta_keywords.ru')->label('Meta Keywords (RU)'),
+                                ]),
+                                Forms\Components\Tabs\Tab::make('🇰🇬 KY')->schema([
+                                    Forms\Components\TextInput::make('title.ky')->label('Заголовок (KY)')
+                                        ->maxLength(255)
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn(Set $set, $state) => $set('slug.ky', Str::slug($state))),
+                                    Forms\Components\TextInput::make('slug.ky')->label('Slug (KY)')
+                                        ->maxLength(255),
+                                    Forms\Components\RichEditor::make('content.ky')->label('Контент (KY)'),
+                                    Forms\Components\TextInput::make('meta_title.ky')->label('Meta Title (KY)'),
+                                    Forms\Components\Textarea::make('meta_description.ky')->label('Meta Description (KY)'),
+                                    Forms\Components\Textarea::make('meta_keywords.ky')->label('Meta Keywords (KY)'),
+                                ]),
+                                Forms\Components\Tabs\Tab::make('🇺🇿 UZ')->schema([
+                                    Forms\Components\TextInput::make('title.uz')->label('Заголовок (UZ)')
+                                        ->maxLength(255)
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(fn(Set $set, $state) => $set('slug.uz', Str::slug($state))),
+                                    Forms\Components\TextInput::make('slug.uz')->label('Slug (UZ)')
+                                        ->maxLength(255),
+                                    Forms\Components\RichEditor::make('content.uz')->label('Контент (UZ)'),
+                                    Forms\Components\TextInput::make('meta_title.uz')->label('Meta Title (UZ)'),
+                                    Forms\Components\Textarea::make('meta_description.uz')->label('Meta Description (UZ)'),
+                                    Forms\Components\Textarea::make('meta_keywords.uz')->label('Meta Keywords (UZ)'),
+                                ]),
+                            ]),
 
                         Forms\Components\FileUpload::make('cover')
                             ->label('Обложка')
@@ -108,25 +125,6 @@ class ContentResource extends Resource
                             ->required()
                             ->default(now())
                             ->columnSpan(2),
-                    ]),
-
-                Forms\Components\Section::make('Meta')
-                    ->schema([
-                        Forms\Components\TextInput::make('meta_title')
-                            ->label('Meta Title')
-                            ->required()
-                            ->maxLength(255)
-                            ->columnSpan(2),
-
-                        Forms\Components\Textarea::make('meta_description')
-                            ->label('Meta Description')
-                            ->columnSpanFull()
-                            ->required(),
-
-                        Forms\Components\Textarea::make('meta_keywords')
-                            ->label('Meta Keywords')
-                            ->columnSpanFull()
-                            ->required(),
                     ]),
             ]);
     }
