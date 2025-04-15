@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AbdelhamidErrahmouni\FilamentMonacoEditor\MonacoEditor;
 use App\Filament\Resources\ContentResource\Pages;
 use App\Filament\Resources\ContentResource\RelationManagers;
 use App\Models\Category;
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Wiebenieuwenhuis\FilamentCodeEditor\Components\CodeEditor;
 
 class ContentResource extends Resource
 {
@@ -68,45 +70,69 @@ class ContentResource extends Resource
                                     Forms\Components\TextInput::make('slug.ru')->label('Slug (RU)')
                                         ->required()
                                         ->maxLength(255),
-                                    Forms\Components\RichEditor::make('content.ru')->label('Контент (RU)'),
+
+                                    Forms\Components\Select::make('content_type_ru')
+                                        ->label('Тип редактора для RU')
+                                        ->options([
+                                            'code' => 'Редактор кода',
+                                            'rich' => 'Визуальный редактор',
+                                        ])
+                                        ->default('rich')
+                                        ->reactive(),
+
+                                    Forms\Components\Group::make([
+                                        CodeEditor::make('content.ru')
+                                            ->label('Контент (RU)')
+                                            ->visible(fn (callable $get) => $get('content_type_ru') === 'code'),
+                                        Forms\Components\RichEditor::make('content.ru')
+                                            ->label('Контент (RU)')
+                                            ->visible(fn (callable $get) => $get('content_type_ru') === 'rich'),
+                                    ]),
                                     Forms\Components\TextInput::make('meta_title.ru')->label('Meta Title (RU)'),
                                     Forms\Components\Textarea::make('meta_description.ru')->label('Meta Description (RU)'),
                                     Forms\Components\Textarea::make('meta_keywords.ru')->label('Meta Keywords (RU)'),
                                 ]),
-                                Forms\Components\Tabs\Tab::make('🇰🇬 KY')->schema([
-                                    Forms\Components\TextInput::make('title.ky')->label('Заголовок (KY)')
+                                Forms\Components\Tabs\Tab::make('🇰🇬 KG')->schema([
+                                    Forms\Components\TextInput::make('title.kg')->label('Заголовок (KG)')
                                         ->maxLength(255)
                                         ->live(onBlur: true)
-                                        ->afterStateUpdated(fn(Set $set, $state) => $set('slug.ky', Str::slug($state))),
-                                    Forms\Components\TextInput::make('slug.ky')->label('Slug (KY)')
+                                        ->afterStateUpdated(fn(Set $set, $state) => $set('slug.kg', Str::slug($state))),
+                                    Forms\Components\TextInput::make('slug.kg')->label('Slug (KG)')
                                         ->maxLength(255),
-                                    Forms\Components\RichEditor::make('content.ky')->label('Контент (KY)'),
-                                    Forms\Components\TextInput::make('meta_title.ky')->label('Meta Title (KY)'),
-                                    Forms\Components\Textarea::make('meta_description.ky')->label('Meta Description (KY)'),
-                                    Forms\Components\Textarea::make('meta_keywords.ky')->label('Meta Keywords (KY)'),
-                                ]),
-                                Forms\Components\Tabs\Tab::make('🇺🇿 UZ')->schema([
-                                    Forms\Components\TextInput::make('title.uz')->label('Заголовок (UZ)')
-                                        ->maxLength(255)
-                                        ->live(onBlur: true)
-                                        ->afterStateUpdated(fn(Set $set, $state) => $set('slug.uz', Str::slug($state))),
-                                    Forms\Components\TextInput::make('slug.uz')->label('Slug (UZ)')
-                                        ->maxLength(255),
-                                    Forms\Components\RichEditor::make('content.uz')->label('Контент (UZ)'),
-                                    Forms\Components\TextInput::make('meta_title.uz')->label('Meta Title (UZ)'),
-                                    Forms\Components\Textarea::make('meta_description.uz')->label('Meta Description (UZ)'),
-                                    Forms\Components\Textarea::make('meta_keywords.uz')->label('Meta Keywords (UZ)'),
+                                    Forms\Components\Select::make('content_type_kg')
+                                        ->label('Тип редактора для KG')
+                                        ->options([
+                                            'code' => 'Редактор кода',
+                                            'rich' => 'Визуальный редактор',
+                                        ])
+                                        ->default('rich')
+                                        ->reactive(),
+
+                                    Forms\Components\Group::make([
+                                        CodeEditor::make('content.kg')
+                                            ->label('Контент (KG)')
+                                            ->visible(fn (callable $get) => $get('content_type_kg') === 'code'),
+                                        Forms\Components\RichEditor::make('content.kg')
+                                            ->label('Контент (KG)')
+                                            ->visible(fn (callable $get) => $get('content_type_kg') === 'rich'),
+                                    ]),
+
+                                    Forms\Components\TextInput::make('meta_title.kg')->label('Meta Title (KG)'),
+                                    Forms\Components\Textarea::make('meta_description.kg')->label('Meta Description (KG)'),
+                                    Forms\Components\Textarea::make('meta_keywords.kg')->label('Meta Keywords (KG)'),
                                 ]),
                             ]),
 
                         Forms\Components\FileUpload::make('cover')
                             ->label('Обложка')
                             ->image()
+                            ->directory('covers')
                             ->columnSpan(2),
 
                         Forms\Components\FileUpload::make('banner_image')
                             ->label('Изображение баннера')
                             ->image()
+                            ->directory('banners')
                             ->columnSpan(2),
 
                         Forms\Components\Select::make('status')
@@ -125,6 +151,10 @@ class ContentResource extends Resource
                             ->required()
                             ->default(now())
                             ->columnSpan(2),
+
+
+
+
                     ]),
             ]);
     }

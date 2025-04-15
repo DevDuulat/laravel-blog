@@ -8,6 +8,9 @@ use App\Models\Category;
 use App\Models\Test;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,20 +28,51 @@ class TestResource extends Resource
     {
         return $form
             ->schema([
-                SelectTree::make('category_id')
-                    ->label('Категория')
-                    ->relationship('category', 'name', 'parent_id')
-                    ->searchable()
-                    ->required()
-                    ->placeholder('Выберите категорию'),
-                Forms\Components\TextInput::make('title')
-                    ->required(),
-                Forms\Components\TextInput::make('duration')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\TextInput::make('video'),
+                Section::make('Основная информация')
+                    ->schema([
+                        SelectTree::make('category_id')
+                            ->label('Категория')
+                            ->relationship('category', 'name', 'parent_id')
+                            ->searchable()
+                            ->required()
+                            ->placeholder('Выберите категорию'),
+
+                        Tabs::make('Название теста')
+                            ->tabs([
+                                Tabs\Tab::make('🇷🇺 RU')->schema([
+                                    TextInput::make('title.ru')
+                                        ->label('Название (RU)')
+                                        ->required(),
+                                ]),
+                                Tabs\Tab::make('🇰🇬 KG')->schema([
+                                    TextInput::make('title.kg')
+                                        ->label('Аталышы (KG)')
+                                        ->required(),
+                                ]),
+                            ]),
+                    ])
+                    ->columns(1)
+                    ->collapsed(false),
+
+                Section::make('Мультимедиа')
+                    ->schema([
+                        Forms\Components\FileUpload::make('image')
+                            ->label('Изображение')
+                            ->image()
+                            ->imagePreviewHeight('200')
+                            ->hint('Максимум 2MB, PNG/JPG'),
+                    ])
+                    ->columns(1),
+
+                Section::make('Настройки')
+                    ->schema([
+                        TextInput::make('duration')
+                            ->label('Длительность (в минутах)')
+                            ->required()
+                            ->numeric()
+                            ->minValue(1),
+                    ])
+                    ->columns(1),
             ]);
     }
 

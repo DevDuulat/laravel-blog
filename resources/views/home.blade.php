@@ -5,11 +5,13 @@
         <div class="container mx-auto px-4 lg:px-8 xl:px-16 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-12">
             <div class="text-center sm:text-start flex flex-col gap-6 max-w-2xl">
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
-                    Проверьте свои знания <span class="text-orange-500">ПДД</span> онлайн!
+                    {{ __('messages.test_your_knowledge') }}
+                    <br>
+                    <span class="text-orange-500">{{ __('messages.pdd') }}</span> {{ __('messages.online') }}
                 </h1>
 
                 <p class="text-lg sm:text-xl text-gray-600 leading-relaxed">
-                    Готовитесь к экзамену или хотите освежить знания? Наша платформа предлагает актуальные тесты и полезные материалы для водителей всех уровней.
+                    {{ __('messages.description_pdd_platform') }}
                 </p>
 
                 <div class="flex flex-col sm:flex-row justify-center sm:justify-start gap-4 mt-4">
@@ -18,7 +20,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
                         </svg>
-                        Начать тест
+                        {{ __('messages.start_test') }}
                     </a>
 
                     <a href="{{ route('posts.index') }}"
@@ -26,7 +28,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                         </svg>
-                        Читать блог
+                        {{ __('messages.read_blog') }}
                     </a>
                 </div>
 
@@ -35,19 +37,19 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
-                        Актуальные билеты 2024
+                        {{ __('messages.actual_tickets') }}
                     </div>
                     <div class="flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
-                        Подробные объяснения
+                        {{ __('messages.detailed_explanations') }}
                     </div>
                     <div class="flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                         </svg>
-                        Статистика результатов
+                        {{ __('messages.questions_count') }}
                     </div>
                 </div>
             </div>
@@ -81,19 +83,23 @@
             <h2 class="text-center text-3xl font-bold mb-12 text-gray-800">ПДД КР 2025</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach ([
-                    ['title' => 'ПДД КР 2024', 'desc' => 'Актуальные правила дорожного движения Кыргызской Республики на 2024 год.', 'link' => '#'],
-                    ['title' => 'Дорожные знаки', 'desc' => 'Полный список дорожных знаков с пояснениями и изображениями.', 'link' => '#'],
-                    ['title' => 'Дорожная разметка', 'desc' => 'Интерактивный справочник дорожной разметки с примерами.', 'link' => '#'],
-                ] as $item)
+                @foreach ($pages as $page)
+                    @php
+                        $locale = app()->getLocale();
+
+                        $title = is_array($page->title) ? ($page->title[$locale] ?? $page->title['ru']) : $page->title;
+                        $desc = is_array($page->meta_description) ? ($page->meta_description[$locale] ?? $page->meta_description['ru']) : $page->meta_description;
+                        $slug = is_array($page->slug) ? ($page->slug[$locale] ?? $page->slug['ru']) : $page->slug;
+                    @endphp
+
                     <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
                         <div class="flex flex-col gap-3">
-                            <h3 class="text-lg font-bold text-gray-900">{{ $item['title'] }}</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">{{ $item['desc'] }}</p>
+                            <h3 class="text-lg font-bold text-gray-900">{{ $title }}</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">{{ $desc }}</p>
                         </div>
-                        <a href="{{ $item['link'] }}"
+                        <a href="{{ route('pages.show', $slug) }}"
                            class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
-                            Перейти
+                            {{ __('messages.read') }}
                         </a>
                     </div>
                 @endforeach
@@ -103,7 +109,7 @@
 
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 lg:px-16">
-            <h3 class="text-center text-3xl font-bold mb-12 text-gray-800">Блог новостей</h3>
+            <h3 class="text-center text-3xl font-bold mb-12 text-gray-800">{{ __('messages.news_blog')}}</h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach ($posts as $post)
@@ -116,6 +122,7 @@
 
                             <h4 class="text-lg font-semibold text-gray-900 mb-2 leading-snug">
                                 {{ $post->title }}
+
                             </h4>
 
                             <p class="text-sm text-gray-600 leading-relaxed">
@@ -126,7 +133,7 @@
                         <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
                             <span>{{ \Carbon\Carbon::parse($post->published_at)->format('d.m.Y') }}</span>
                             <a href="{{ route('posts.show', $post->slug) }}" class="text-orange-500 hover:underline font-medium">
-                                Читать →
+                                {{ __('messages.read') }}
                             </a>
                         </div>
                     </div>
@@ -135,18 +142,18 @@
 
             <!-- CTA блок -->
             <div class="mt-16 text-center bg-orange-400 text-white py-10 rounded-lg shadow-md">
-                <h4 class="text-2xl font-semibold mb-4">Хотите получать новости первыми?</h4>
-                <p class="text-lg mb-6">Подпишитесь на наш новостной бюллетень, чтобы быть в курсе всех обновлений!</p>
+                <h4 class="text-2xl font-semibold mb-4">{{ __('messages.want_news_first') }}</h4>
+                <p class="text-lg mb-6">{{ __('messages.subscribe_newsletter_text') }}</p>
                 <a href=""
                    class="px-6 py-3 bg-white text-orange-500 font-semibold rounded-lg hover:bg-gray-200 transition">
-                    Подписаться
+                    {{ __('messages.subscribe') }}
                 </a>
             </div>
 
             <div class="flex justify-center mt-12">
                 <a href="{{ route('posts.index') }}"
                    class="text-sm text-orange-500 hover:underline font-medium">
-                    Посмотреть все статьи
+                    {{ __('messages.view_all_articles') }}
                 </a>
             </div>
         </div>

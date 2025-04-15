@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('parent_id')->nullable();
-            $table->string('name');
-            $table->string('slug')->unique();
+            $table->json('name');
+            $table->json('slug')->unique();
             $table->string('banner_image')->nullable();
             $table->enum('category_type', ['post', 'page', 'test'])->nullable();
             $table->boolean('is_active')->default(true);

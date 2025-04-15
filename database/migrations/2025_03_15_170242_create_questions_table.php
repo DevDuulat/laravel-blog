@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('test_id');
-            $table->text('question');
+            $table->json('question');
+            $table->json('explanation')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
-            $table->text('explanation')->nullable()->after('question');
             $table->timestamps();
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
         });

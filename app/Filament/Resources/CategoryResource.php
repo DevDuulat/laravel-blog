@@ -6,6 +6,7 @@ use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -48,41 +49,53 @@ class CategoryResource extends Resource
                     ->default('posts')
                     ->hidden(fn (callable $get) => !is_null($get('parent_id'))),
 
+                Tabs::make('Translations')
+                    ->tabs([
+                        Tabs\Tab::make('🇷🇺 RU')
+                            ->schema([
+                                Forms\Components\TextInput::make('name.ru')
+                                    ->label('Название')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn (Set $set, $state) =>
+                                    $set('slug.ru', Str::slug($state))
+                                    ),
 
-        Forms\Components\TextInput::make('name')
-                    ->label('Название')
-                    ->required()
-                    ->maxLength(255)
-                    ->live(onBlur: true)
-                    ->afterStateUpdated(function (Set $set, $state) {
-                        $set('slug', Str::slug($state));
-                    }),
+                                Forms\Components\TextInput::make('slug.ru')
+                                    ->label('Slug')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->validationMessages([
+                                        'unique' => 'Этот slug уже используется.',
+                                    ]),
+                            ]),
 
-                Forms\Components\TextInput::make('slug')
-                    ->label('Slug')
-                    ->required()
-                    ->maxLength(255)
-                    ->rules(function (callable $get) {
-                        $id = $get('id');
-                        return [
-                            Rule::unique(Category::class, 'slug')->ignore($id),
-                        ];
-                    })
-                    ->validationMessages([
-                        'unique' => 'Этот slug уже существует. Пожалуйста, выберите другое название категории.',
+                        Tabs\Tab::make('🇰🇬 KG')
+                            ->schema([
+                                Forms\Components\TextInput::make('name.kg')
+                                    ->label('Аталышы')
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn (Set $set, $state) =>
+                                    $set('slug.kg', Str::slug($state))
+                                    ),
+
+                                Forms\Components\TextInput::make('slug.kg')
+                                    ->label('Slug')
+                                    ->maxLength(255),
+                            ]),
                     ]),
-
-
-        Forms\Components\FileUpload::make('banner_image')
+                Forms\Components\FileUpload::make('banner_image')
                     ->label('Баннер')
-                    ->image(),
+                    ->image()
+                    ->directory('categories'),
 
                 Forms\Components\Toggle::make('is_active')
                     ->label('Активность')
                     ->required(),
             ]);
     }
-
 
     public static function table(Table $table): Table
     {

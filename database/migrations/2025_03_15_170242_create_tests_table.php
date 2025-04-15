@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('category_id');
-            $table->string('title');
+            $table->json('title');
             $table->integer('duration');
             $table->string('image')->nullable();
-            $table->string('video')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

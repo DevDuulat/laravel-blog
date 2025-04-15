@@ -19,6 +19,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/locale/{locale}', function ($locale) {
+    if (in_array($locale, ['ru', 'kg'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('locale.switch');
+
+
+
 
 //Посты
 Route::prefix('posts')->name('posts.')->group(function () {
@@ -29,6 +38,14 @@ Route::prefix('posts')->name('posts.')->group(function () {
 
 Route::get('/tests', [TestController::class, 'index'])->name('tests.index');
 
+Route::get('/pages', [ContentController::class, 'pagesIndex'])->name('pages.index');
+Route::get('/pages/{slug}', [ContentController::class, 'showPage'])->name('pages.show');
+
+
+
+
+Route::get('/traffic-signs', [ContentController::class, 'trafficSigns'])->name('traffic.signs');
+Route::get('/road-markings', [ContentController::class, 'roadMarkings'])->name('road.markings');
 
 //Route::get('/test/saved', [TestController::class, 'savedQuestions'])->name('questions.saved');
 //Route::get('/test/saved/result', [TestController::class, 'savedTestResult'])->name('test.savedResult');
@@ -39,10 +56,12 @@ Route::post('/answer/{question}', [TestController::class, 'submit'])->name('answ
 Route::get('/test/{testId}/result', [TestController::class, 'result'])->name('test.result');
 Route::get('/test/{testId}/retry', [TestController::class, 'retry'])->name('test.retry');
 
+
+Route::get('/faq', [HomeController::class, 'faqPage'])->name('faq');
+
 //Route::get('/dashboard', [DashboardController::class, 'index'])
 //    ->middleware(['auth', 'verified'])
 //    ->name('home');
-
 
 
 Route::middleware('auth')->group(function () {

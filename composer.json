@@ -6,15 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "abdelhamiderrahmouni/filament-monaco-editor": "^0.2.5",
         "codewithdennis/filament-select-tree": "^3.1",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "hasnayeen/themes": "^3.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.6",
         "shuvroroy/filament-spatie-laravel-backup": "^2.2",
-        "spatie/laravel-translatable": "^6.11"
+        "spatie/laravel-translatable": "^6.11",
+        "wiebenieuwenhuis/filament-code-editor": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
@@ -67,8 +70,16 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
-        }
+        },
+        "secure-http": true
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://repo.packagist.org"
+
+        }
+    }
 }

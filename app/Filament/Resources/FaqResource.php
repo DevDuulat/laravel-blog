@@ -6,6 +6,7 @@ use App\Filament\Resources\FaqResource\Pages;
 use App\Filament\Resources\FaqResource\RelationManagers;
 use App\Models\Faq;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,11 +24,32 @@ class FaqResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('question')
-                    ->required(),
-                Forms\Components\Textarea::make('answer')
-                    ->required()
-                    ->columnSpanFull(),
+                Tabs::make('Translations')
+                    ->tabs([
+                        Tabs\Tab::make('🇷🇺 RU')
+                            ->schema([
+                                Forms\Components\TextInput::make('question.ru')
+                                    ->label('Вопрос (RU)')
+                                    ->required()
+                                    ->maxLength(255),
+
+                                Forms\Components\Textarea::make('answer.ru')
+                                    ->label('Ответ (RU)')
+                                    ->required()
+                                    ->columnSpanFull(),
+                            ]),
+
+                        Tabs\Tab::make('🇰🇬 KG')
+                            ->schema([
+                                Forms\Components\TextInput::make('question.kg')
+                                    ->label('Суроо (KG)')
+                                    ->maxLength(255),
+
+                                Forms\Components\Textarea::make('answer.kg')
+                                    ->label('Жооп (KG)')
+                                    ->columnSpanFull(),
+                            ]),
+                    ]),
             ]);
     }
 

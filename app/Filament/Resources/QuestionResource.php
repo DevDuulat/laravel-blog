@@ -5,15 +5,16 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QuestionResource\Pages;
 use App\Models\Question;
 use Filament\Forms;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Get;
 
 class QuestionResource extends Resource
 {
@@ -23,52 +24,66 @@ class QuestionResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('test_id')
-                    ->relationship('test', 'title')
-                    ->required()
-                    ->label('Тест'),
+        return $form->schema([
 
-                // 🔥 Repeater для ВОПРОСОВ
-                Repeater::make('questions_data')
-                    ->label('Вопросы')
-                    ->schema([
-                        Textarea::make('question')
-                            ->label('Вопрос')
-                            ->required()
-                            ->columnSpanFull(),
+            Select::make('active_locale')
+                ->label('Язык контента')
+                ->options([
+                    'ru' => '🇷🇺 Русский',
+                    'kg' => '🇰🇬 Кыргызча',
+                ])
+                ->default('ru')
+                ->reactive(),
 
-                        Textarea::make('explanation')
-                            ->label('Пояснение')
-                            ->rows(3),
+            Forms\Components\Select::make('test_id')
+                ->relationship('test', 'id')
+                ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('title', 'ru') . ' / ' . $record->getTranslation('title', 'kg'))
+                ->required()
+                ->label('Тест'),
 
-                        FileUpload::make('image')
-                            ->label('Изображение')
-                            ->image(),
+            Repeater::make('questions_data')
+                ->label('Вопросы')
+                ->schema([
 
-                        TextInput::make('video')
-                            ->label('Видео'),
+                    Textarea::make('question')
+                        ->label(fn (Get $get) => $get('active_locale') === 'kg' ? 'Суроо' : 'Вопрос')
+                        ->required()
+                        ->columnSpanFull(),
 
-                        // 🔥 Repeater для ОТВЕТОВ
-                        Repeater::make('answers')
-                            ->label('Ответы')
-                            ->schema([
-                                Textarea::make('answer')
-                                    ->label('Ответ')
-                                    ->required(),
-                                Toggle::make('is_correct')
-                                    ->label('Правильный?')
-                                    ->default(false),
-                            ])
-                            ->minItems(4)
-                            ->maxItems(4)
-                            ->columns(1),
-                    ])
-                    ->columnSpanFull()
-                    ->defaultItems(1) // чтобы сразу был 1 вопрос при открытии формы
-                    ->itemLabel(fn ($state) => str($state['question'])->limit(20)),
-            ]);
+                    Textarea::make('explanation')
+                        ->label(fn (Get $get) => $get('active_locale') === 'kg' ? 'Түшүндүрмө' : 'Пояснение')
+                        ->rows(3)
+                        ->columnSpanFull(),
+
+                    FileUpload::make('image')
+                        ->label('Изображение')
+                        ->image(),
+
+                    TextInput::make('video')
+                        ->label('Видео'),
+
+                    Repeater::make('answers')
+                        ->label('Ответы')
+                        ->schema([
+                            Textarea::make('answer')
+                                ->label(fn (Get $get) => $get('active_locale') === 'kg' ? 'Жооп' : 'Ответ')
+                                ->required(),
+
+                            Forms\Components\Toggle::make('is_correct')
+                                ->label('Правильный?')
+                                ->default(false),
+                        ])
+                        ->minItems(4)
+                        ->maxItems(4)
+                        ->columns(1)
+                        ->itemLabel(fn ($state) => str($state['answer'] ?? 'Ответ')->limit(20)),
+
+                ])
+                ->defaultItems(1)
+                ->columnSpanFull()
+                ->itemLabel(fn ($state) => str($state['question'] ?? 'Вопрос')->limit(20)),
+
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -78,9 +93,11 @@ class QuestionResource extends Resource
                 Tables\Columns\TextColumn::make('test.title')
                     ->label('Тест')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('question')
                     ->label('Вопрос')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Создано')
                     ->dateTime()

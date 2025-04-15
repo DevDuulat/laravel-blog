@@ -5,9 +5,12 @@
         <div class="container mx-auto px-4 lg:px-16">
             <div class="flex flex-col md:flex-row gap-8">
                 <div class="w-full md:w-2/3 space-y-6">
-                    @foreach($posts as $post)
-                        <a href="{{ route('posts.show', $post->slug) }}" class="block">
-                            <div class="flex flex-col lg:flex-row bg-white p-6 rounded-lg shadow-md transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg">
+                    @forelse($posts as $post)
+{{--                        <a href="{{ route('posts.show', $post->getTranslatedSlug()) }}" class="block">--}}
+                            <a href="{{ route('posts.show', ['locale' => app()->getLocale(), 'slug' => $post->getTranslatedSlug()]) }}" class="block">
+
+
+                        <div class="flex flex-col lg:flex-row bg-white p-6 rounded-lg shadow-md transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg">
                                 <div class="w-full h-48 lg:hidden">
                                     <img src="{{ asset('storage/' . $post->cover) }}" alt="" class="object-cover w-full h-full rounded-lg"/>
                                 </div>
@@ -20,7 +23,13 @@
                                 </div>
                             </div>
                         </a>
-                    @endforeach
+
+                        @empty
+                            <div class="bg-white p-6 rounded-lg shadow-md text-gray-600 text-center">
+                                Пока нет доступных постов.
+                            </div>
+                        @endforelse
+
                 </div>
 
                 <div class="w-full md:w-1/3 hidden md:block space-y-4">

@@ -17,7 +17,7 @@ class TestProgress extends Component
     public $selectedAnswer = null;
 
     public $startTime;
-    public $duration; // в секундах
+    public $duration;
     public $timeLeft;
 
     public function mount(Test $test)
@@ -50,7 +50,7 @@ class TestProgress extends Component
     {
         $this->updateTimeLeft();
 
-        if ($this->timeLeft <= 0) return; // уже истекло
+        if ($this->timeLeft <= 0) return;
 
         $question = $this->questions[$this->currentQuestionIndex];
         $correctAnswer = $question->answers()->where('is_correct', true)->first();
@@ -91,7 +91,6 @@ class TestProgress extends Component
         for ($i = $this->currentQuestionIndex; $i < $this->questions->count(); $i++) {
             $question = $this->questions[$i];
 
-            // неотвеченные
             $answers[$question->id] = [
                 'question_id' => $question->id,
                 'selected' => null,
@@ -108,7 +107,7 @@ class TestProgress extends Component
 
         Session::put('test_answers', $answers);
 
-        return $this->redirectToResults(true); // истёкшее время
+        return $this->redirectToResults(true);
     }
 
     private function redirectToResults($timeExpired = false)

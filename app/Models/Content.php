@@ -30,9 +30,16 @@ class Content extends Model
         'meta_keywords',
     ];
 
+
     protected $casts = [
-        'published_at' => 'datetime',
+        'title' => 'array',
+        'slug' => 'array',
+        'content' => 'array',
+        'meta_title' => 'array',
+        'meta_description' => 'array',
+        'meta_keywords' => 'array',
     ];
+
 
     public $translatable = [
         'title',
@@ -42,6 +49,21 @@ class Content extends Model
         'meta_description',
         'meta_keywords',
     ];
+
+    public function getTranslatedSlug(): ?string
+    {
+        return $this->getTranslation('slug', app()->getLocale());
+    }
+
+    public function getTranslatedTitle(): ?string
+    {
+        return $this->getTranslation('title', app()->getLocale());
+    }
+
+    public function getTranslatedContent(): ?string
+    {
+        return $this->getTranslation('content', app()->getLocale());
+    }
 
     public function category()
     {
