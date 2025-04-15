@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('content', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('category_id')->nullable();
+            $table->id('id')->primary();
+            $table->id('category_id')->nullable();
             $table->enum('type', ['post', 'page']);
 
             $table->json('title');

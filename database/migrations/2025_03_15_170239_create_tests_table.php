@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tests', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('category_id');
+            $table->id('id')->primary();
+            $table->id('category_id');
             $table->json('title');
             $table->integer('duration');
             $table->string('image')->nullable();

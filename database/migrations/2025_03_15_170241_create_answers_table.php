@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('question_id');
+            $table->id()->primary();
+            $table->id('question_id');
             $table->json('answer');
             $table->unsignedInteger('group_index')->default(0);
             $table->boolean('is_correct')->default(false);
