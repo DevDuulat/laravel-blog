@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->id('question_id');
+            $table->id();
+            $table->unsignedBigInteger('question_id');
             $table->json('answer');
             $table->unsignedInteger('group_index')->default(0);
             $table->boolean('is_correct')->default(false);
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

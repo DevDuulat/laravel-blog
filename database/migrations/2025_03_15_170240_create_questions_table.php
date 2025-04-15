@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->uuid('test_id');
+            $table->unsignedBigInteger('test_id');
             $table->json('question');
             $table->json('explanation')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
             $table->timestamps();
+
             $table->foreign('test_id')->references('id')->on('tests')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.
