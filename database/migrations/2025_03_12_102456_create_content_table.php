@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('content', function (Blueprint $table) {
-            $table->id('id')->primary();
-            $table->id('category_id')->nullable();
+            $table->id();
+
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->enum('type', ['post', 'page']);
 
             $table->json('title');
@@ -33,8 +34,8 @@ return new class extends Migration
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
-
     }
+
 
     /**
      * Reverse the migrations.

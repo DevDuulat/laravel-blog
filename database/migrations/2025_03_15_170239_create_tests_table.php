@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tests', function (Blueprint $table) {
-            $table->id('id')->primary();
-            $table->id('category_id');
+            $table->id();
+
+            $table->unsignedBigInteger('category_id');
+
             $table->json('title');
             $table->integer('duration');
             $table->string('image')->nullable();
@@ -22,6 +24,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
+
 
     /**
      * Reverse the migrations.

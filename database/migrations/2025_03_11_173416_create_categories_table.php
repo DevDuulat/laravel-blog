@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id('id')->primary();
-            $table->id('parent_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->json('name');
             $table->json('slug');
             $table->string('banner_image')->nullable();
