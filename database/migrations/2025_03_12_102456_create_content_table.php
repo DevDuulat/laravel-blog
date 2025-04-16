@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('content', function (Blueprint $table) {
             $table->id();
+            $table->uuid('category_id')->nullable();
 
-            $table->unsignedBigInteger('category_id')->nullable();
             $table->enum('type', ['post', 'page']);
 
             $table->json('title');
