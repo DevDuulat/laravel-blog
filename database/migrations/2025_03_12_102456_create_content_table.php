@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('content', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->uuid('category_id')->nullable();
 
             $table->enum('type', ['post', 'page']);
