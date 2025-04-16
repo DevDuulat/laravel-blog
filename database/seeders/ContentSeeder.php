@@ -50,11 +50,8 @@ class ContentSeeder extends Seeder
                 'ru' => 'ПДД КР 2024, правила дорожного движения, Кыргызстан, водитель, автошкола, экзамен, дорожные знаки',
                 'kg' => 'КР ЖЖЭ 2024, жол жүрүү эрежелери, Кыргызстан, айдоочу, авто мектеп, экзамен, жол белгилери',
             ],
-            'banner_image' => 'placeholders/cover.jpg',
             'status' => 'published',
             'published_at' => Carbon::parse('2025-04-12 22:24:00'),
-            'likes_count' => 0,
-            'comments_count' => 0,
         ]);
     }
 }
