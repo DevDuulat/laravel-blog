@@ -16,13 +16,10 @@ class TestController extends Controller
 
         $categories = $this->getTestCategoriesWithRelations();
 
-        $savedQuestions = [];
         $mistakes = [];
         $testResults = [];
 
         if ($user) {
-            $savedQuestions = $this->getUserSavedQuestions();
-
             $mistakes = \App\Models\Mistake::with(['question.answers', 'question'])
                 ->where('user_id', $user->id)
                 ->get();
@@ -34,11 +31,11 @@ class TestController extends Controller
 
         return view('test.index', compact(
             'categories',
-            'savedQuestions',
             'mistakes',
             'testResults'
         ));
     }
+
 
 
 
@@ -58,13 +55,6 @@ class TestController extends Controller
             ->get();
     }
 
-    protected function getUserSavedQuestions()
-    {
-        return SavedQuestion::query()
-            ->where('user_id', auth()->id())
-            ->with('question.answers')
-            ->get();
-    }
 
 
 
