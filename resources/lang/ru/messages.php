@@ -26,7 +26,7 @@ return [
     'subscribe_newsletter_text' => 'Подпишитесь на наш новостной бюллетень, чтобы быть в курсе всех обновлений!',
     'subscribe' => 'Подписаться',
     'view_all_articles' => 'Посмотреть все статьи',
-    'copyright' => 'Посмотреть все статьи',
+    'copyright' => 'Все права защищены',
     'advertisement' => 'Реклама',
     'date_of_publication' => 'Дата публикации',
     'to_answer' => 'Ответить',
