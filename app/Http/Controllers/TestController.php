@@ -54,7 +54,7 @@ class TestController extends Controller
                 'children.tests',
                 'tests'
             ])
-            ->orderByDesc('published_at')
+            ->orderByDesc('created_at')
             ->get();
     }
 
