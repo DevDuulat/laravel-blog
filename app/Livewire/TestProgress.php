@@ -54,7 +54,8 @@ class TestProgress extends Component
 
         $question = $this->questions[$this->currentQuestionIndex];
         $correctAnswer = $question->answers()->where('is_correct', true)->first();
-        $isCorrect = $this->selectedAnswer == $correctAnswer->id;
+
+        $isCorrect = $correctAnswer && $this->selectedAnswer == $correctAnswer->id;
 
         $answers = Session::get('test_answers', []);
         $answers[$question->id] = [
