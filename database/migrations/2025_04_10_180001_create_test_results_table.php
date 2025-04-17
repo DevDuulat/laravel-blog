@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('test_results', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('test_id')->constrained()->onDelete('cascade');
+            $table->uuid('test_id');
             $table->unsignedInteger('score');
             $table->unsignedInteger('total');
             $table->timestamps();
