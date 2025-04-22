@@ -76,13 +76,15 @@ class ContentController extends Controller
 
         $category = Category::where("slug->{$locale}", $categorySlug)->firstOrFail();
 
-        $contents = Content::where('category_id', $category->id)
+        $subcategories = Category::where('parent_id', $category->id)->get();
+
+        $contents = Content::whereIn('category_id', $subcategories->pluck('id')->toArray())
             ->where('type', 'page')
             ->where('status', 'published')
             ->orderBy('published_at', 'desc')
             ->get();
 
-        return view('pages.pdd-section', compact('contents'));
+        return view('pages.pdd-section', compact('contents', 'subcategories'));
     }
 
 
@@ -99,14 +101,32 @@ class ContentController extends Controller
 
         $category = Category::where("slug->{$locale}", $categorySlug)->firstOrFail();
 
-        $contents = Content::where('category_id', $category->id)
+        $subcategories = Category::where('parent_id', $category->id)->get();
+
+        $contents = Content::whereIn('category_id', $subcategories->pluck('id')->toArray())
             ->where('type', 'page')
             ->where('status', 'published')
             ->orderBy('published_at', 'desc')
             ->get();
 
-        return view('pages.pdd-section', compact('contents'));
+        return view('pages.pdd-section', compact('contents', 'subcategories'));
     }
+
+    public function fines()
+    {
+        $locale = app()->getLocale();
+
+        $category = Category::whereJsonContains("slug->$locale", 'fines')->firstOrFail();
+
+        $pages = Content::where('category_id', $category->id)
+            ->where('type', 'page')
+            ->where('status', 'published')
+            ->latest('published_at')
+            ->get();
+
+        return view('pages.index', compact('pages'));
+    }
+
 
 
 

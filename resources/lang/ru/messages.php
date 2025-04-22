@@ -32,7 +32,24 @@ return [
     'to_answer' => 'Ответить',
     'time_left' => 'Осталось времени: :time',
     'question_counter' => 'Вопрос :current из :total',
-
+    'all' => 'Все',
+    'all_road_signs' => 'Все дорожные знаки',
+    'pdd_2024_title' => 'ПДД Кыргызстана 2024',
+    'pdd_2024_desc' => 'Актуальные правила дорожного движения 2024 года.',
+    'traffic_signs_title' => 'Дорожные знаки',
+    'traffic_signs_desc' => 'Все дорожные знаки с пояснениями и изображениями.',
+    'road_markings_title' => 'Дорожная разметка',
+    'road_markings_desc' => 'Виды дорожной разметки и их значения.',
+    'school' => 'Школа',
+    'register' => 'Регистрация',
+    'already_registered' => 'Уже зарегистрированный?',
+    'password' => 'Пароль',
+    'confirm_password' => 'Подтвердите пароль?',
+    'name' => 'Имя',
+    'remember_me' => 'Запомнить',
+    'forgot_your_password' => 'Забыли свой пароль?',
+    'login' => 'Войти',
+    'fines' => 'Штрафы',
 
 
 ];

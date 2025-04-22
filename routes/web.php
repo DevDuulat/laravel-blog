@@ -46,6 +46,8 @@ Route::get('/pages/{slug}', [ContentController::class, 'showPage'])->name('pages
 
 Route::get('/traffic-signs', [ContentController::class, 'trafficSigns'])->name('traffic.signs');
 Route::get('/road-markings', [ContentController::class, 'roadMarkings'])->name('road.markings');
+Route::get('/fines', [ContentController::class, 'fines'])->name('fines');
+
 
 //Route::get('/test/saved', [TestController::class, 'savedQuestions'])->name('questions.saved');
 //Route::get('/test/saved/result', [TestController::class, 'savedTestResult'])->name('test.savedResult');
