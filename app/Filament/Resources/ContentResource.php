@@ -7,6 +7,7 @@ use App\Filament\Resources\ContentResource\Pages;
 use App\Filament\Resources\ContentResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Content;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -45,18 +46,14 @@ class ContentResource extends Resource
                             })
                             ->columnSpan(2),
 
-                        Forms\Components\Select::make('category_id')
+                        SelectTree::make('category_id')
                             ->label('Категория')
-                            ->options(function (callable $get) {
-                                $type = $get('type');
-                                return Category::where('category_type', $type)
-                                    ->pluck('name', 'id')
-                                    ->toArray();
-                            })
+                            ->relationship('category', 'name', 'parent_id')
+                            ->enableBranchNode()
                             ->searchable()
-                            ->preload()
-                            ->required()
-                            ->columnSpan(2),
+                            ->placeholder('Выберите категорию')
+                            ->defaultOpenLevel(2)
+                            ->required(),
 
                         Forms\Components\Tabs::make('Переводы')
                             ->columnSpanFull()

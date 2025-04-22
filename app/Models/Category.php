@@ -17,6 +17,11 @@ class Category extends Model
 
     public array $translatable = ['name', 'slug'];
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id');

@@ -32,5 +32,6 @@ return [
     'to_answer' => 'Жооп берүү',
     'time_left' => 'Калган убакыт: :time',
     'question_counter' => ':total суроонун :current',
-
+    'all' => 'Баарысы',
+    'all_road_signs' => 'Бардык жол белгилери',
 ];

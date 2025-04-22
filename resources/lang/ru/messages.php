@@ -32,7 +32,8 @@ return [
     'to_answer' => 'Ответить',
     'time_left' => 'Осталось времени: :time',
     'question_counter' => 'Вопрос :current из :total',
-
+    'all' => 'Все',
+    'all_road_signs' => 'Все дорожные знаки',
 
 
 ];
