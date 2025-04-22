@@ -112,6 +112,21 @@ class ContentController extends Controller
         return view('pages.pdd-section', compact('contents', 'subcategories'));
     }
 
+    public function fines()
+    {
+        $locale = app()->getLocale();
+
+        $category = Category::whereJsonContains("slug->$locale", 'fines')->firstOrFail();
+
+        $pages = Content::where('category_id', $category->id)
+            ->where('type', 'page')
+            ->where('status', 'published')
+            ->latest('published_at')
+            ->get();
+
+        return view('pages.index', compact('pages'));
+    }
+
 
 
 
