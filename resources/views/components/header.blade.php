@@ -7,7 +7,7 @@
                     <path d="M8.25 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0zM15.75 6.75a.75.75 0 00-.75.75v11.25c0 .087.015.17.042.248a3 3 0 015.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 00-3.732-10.104 1.837 1.837 0 00-1.47-.725H15.75z" />
                     <path d="M19.5 19.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
                 </svg>
-                <span class="text-xl font-bold text-gray-800">Авто<span class="text-orange-500">Школа</span></span>
+                <span class="text-xl font-bold text-gray-800">Авто<span class="text-orange-500">{{ __('messages.school') }}</span></span>
             </a>
 
             <nav class="hidden lg:flex items-center space-x-1">
@@ -27,27 +27,18 @@
                         </svg>
                     </button>
                     <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 border border-gray-100">
-                        @if (app()->getLocale() === 'ru')
                             <a href="{{ route('pages.show', 'pdd-kr-2024') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                ПДД Кыргызстана 2024
+                                {{ __('messages.pdd_2024_title') }}
                             </a>
                             <a href="{{ route('traffic.signs') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                Дорожные знаки
+                                {{ __('messages.traffic_signs_title') }}
                             </a>
                             <a href="{{ route('road.markings') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                Дорожная разметка
+                                {{ __('messages.road_markings_title') }}
                             </a>
-                        @else
-                            <a href="{{ route('pages.show', 'kr-zze-2024') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                Жол кыймылы эрежелери
+                            <a href="{{ route('fines') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
+                                {{ __('messages.fines') }}
                             </a>
-                            <a href="{{ route('traffic.signs') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                Жол белгилери
-                            </a>
-                            <a href="{{ route('road.markings') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                Жол сызыктары
-                            </a>
-                        @endif
                     </div>
                 </div>
 

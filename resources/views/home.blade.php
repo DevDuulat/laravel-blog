@@ -83,29 +83,44 @@
             <h2 class="text-center text-3xl font-bold mb-12 text-gray-800">ПДД КР 2025</h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach ($pages as $page)
-                    @php
-                        $locale = app()->getLocale();
 
-                        $title = is_array($page->title) ? ($page->title[$locale] ?? $page->title['ru']) : $page->title;
-                        $desc = is_array($page->meta_description) ? ($page->meta_description[$locale] ?? $page->meta_description['ru']) : $page->meta_description;
-                        $slug = is_array($page->slug) ? ($page->slug[$locale] ?? $page->slug['ru']) : $page->slug;
-                    @endphp
-
-                    <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
-                        <div class="flex flex-col gap-3">
-                            <h3 class="text-lg font-bold text-gray-900">{{ $title }}</h3>
-                            <p class="text-gray-600 text-sm leading-relaxed">{{ $desc }}</p>
-                        </div>
-                        <a href="{{ route('pages.show', $slug) }}"
-                           class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
-                            {{ __('messages.read') }}
-                        </a>
+                <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="flex flex-col gap-3">
+                        <h3 class="text-lg font-bold text-gray-900">{{ __('messages.pdd_2024_title') }}</h3>
+                        <p class="text-gray-600 text-sm">{{ __('messages.pdd_2024_desc') }}</p>
                     </div>
-                @endforeach
+                    <a href="{{ route('pages.show', 'pdd-kr-2024') }}"
+                       class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
+                        {{ __('messages.read') }}
+                    </a>
+                </div>
+
+                <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="flex flex-col gap-3">
+                        <h3 class="text-lg font-bold text-gray-900">{{ __('messages.traffic_signs_title') }}</h3>
+                        <p class="text-gray-600 text-sm">{{ __('messages.traffic_signs_title') }}</p>
+                    </div>
+                    <a href="{{ route('traffic.signs') }}"
+                       class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
+                        {{ __('messages.read') }}
+                    </a>
+                </div>
+
+
+                <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="flex flex-col gap-3">
+                        <h3 class="text-lg font-bold text-gray-900">{{ __('messages.road_markings_title') }}</h3>
+                        <p class="text-gray-600 text-sm">{{ __('messages.road_markings_desc') }}</p>
+                    </div>
+                    <a href="{{ route('road.markings') }}"
+                       class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
+                        {{ __('messages.read') }}
+                    </a>
+                </div>
             </div>
         </div>
     </section>
+
 
     <section class="py-20 bg-white">
         <div class="container mx-auto px-4 lg:px-16">
