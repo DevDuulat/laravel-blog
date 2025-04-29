@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QuestionResource\Pages;
 use App\Models\Question;
 use Filament\Forms;
+use Filament\Forms\Components\Tabs;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -26,18 +27,11 @@ class QuestionResource extends Resource
     {
         return $form->schema([
 
-            Select::make('active_locale')
-                ->label('Язык контента')
-                ->options([
-                    'ru' => '🇷🇺 Русский',
-                    'kg' => '🇰🇬 Кыргызча',
-                ])
-                ->default('ru')
-                ->reactive(),
-
-            Forms\Components\Select::make('test_id')
+            Select::make('test_id')
                 ->relationship('test', 'id')
-                ->getOptionLabelFromRecordUsing(fn ($record) => $record->getTranslation('title', 'ru') . ' / ' . $record->getTranslation('title', 'kg'))
+                ->getOptionLabelFromRecordUsing(fn ($record) =>
+                    $record->getTranslation('title', 'ru') . ' / ' . $record->getTranslation('title', 'kg')
+                )
                 ->required()
                 ->label('Тест'),
 
@@ -45,14 +39,38 @@ class QuestionResource extends Resource
                 ->label('Вопросы')
                 ->schema([
 
-                    Textarea::make('question')
-                        ->label(fn (Get $get) => $get('active_locale') === 'kg' ? 'Суроо' : 'Вопрос')
-                        ->required()
-                        ->columnSpanFull(),
+                    Tabs::make('LangTabs')
+                        ->tabs([
+                            Tabs\Tab::make('Русский')
+                                ->schema([
+                                    Textarea::make('question.ru')->label('Вопрос (RU)')->required(),
+                                    Textarea::make('explanation.ru')->label('Пояснение (RU)'),
+                                    Repeater::make('answers')
+                                        ->label('Ответы (RU)')
+                                        ->schema([
+                                            Textarea::make('answer.ru')->label('Ответ')->required(),
+                                            Forms\Components\Toggle::make('is_correct')->label('Правильный?'),
+                                        ])
+                                        ->minItems(4)
+                                        ->maxItems(4)
+                                        ->columns(1),
+                                ]),
 
-                    Textarea::make('explanation')
-                        ->label(fn (Get $get) => $get('active_locale') === 'kg' ? 'Түшүндүрмө' : 'Пояснение')
-                        ->rows(3)
+                            Tabs\Tab::make('Кыргызча')
+                                ->schema([
+                                    Textarea::make('question.kg')->label('Суроо (KG)')->required(),
+                                    Textarea::make('explanation.kg')->label('Түшүндүрмө (KG)'),
+                                    Repeater::make('answers')
+                                        ->label('Жооптор (KG)')
+                                        ->schema([
+                                            Textarea::make('answer.kg')->label('Жооп')->required(),
+                                            Forms\Components\Toggle::make('is_correct')->label('Туурабы?'),
+                                        ])
+                                        ->minItems(4)
+                                        ->maxItems(4)
+                                        ->columns(1),
+                                ]),
+                        ])
                         ->columnSpanFull(),
 
                     FileUpload::make('image')
@@ -61,28 +79,12 @@ class QuestionResource extends Resource
 
                     TextInput::make('video')
                         ->label('Видео'),
-
-                    Repeater::make('answers')
-                        ->label('Ответы')
-                        ->schema([
-                            Textarea::make('answer')
-                                ->label(fn (Get $get) => $get('active_locale') === 'kg' ? 'Жооп' : 'Ответ')
-                                ->required(),
-
-                            Forms\Components\Toggle::make('is_correct')
-                                ->label('Правильный?')
-                                ->default(false),
-                        ])
-                        ->minItems(4)
-                        ->maxItems(4)
-                        ->columns(1)
-                        ->itemLabel(fn ($state) => str($state['answer'] ?? 'Ответ')->limit(20)),
-
                 ])
                 ->defaultItems(1)
                 ->columnSpanFull()
-                ->itemLabel(fn ($state) => str($state['question'] ?? 'Вопрос')->limit(20)),
-
+                ->itemLabel(fn ($state) =>
+                str($state['question']['ru'] ?? 'Вопрос')->limit(30)
+                ),
         ]);
     }
 
