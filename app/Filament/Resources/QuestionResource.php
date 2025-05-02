@@ -37,6 +37,10 @@ class QuestionResource extends Resource
 
             Repeater::make('questions_data')
                 ->label('Вопросы')
+                ->rules(['min:1'])
+                ->validationMessages([
+                    'min' => 'Нужно добавить хотя бы один вопрос',
+                ])
                 ->schema([
 
                     Tabs::make('LangTabs')
@@ -47,12 +51,16 @@ class QuestionResource extends Resource
                                     Textarea::make('explanation.ru')->label('Пояснение (RU)'),
                                     Repeater::make('answers')
                                         ->label('Ответы (RU)')
+                                        ->validationMessages([
+                                            'minItems' => 'Добавьте 5 ответа',
+                                            'maxItems' => 'Должно быть ровно 5 ответа',
+                                        ])
                                         ->schema([
                                             Textarea::make('answer.ru')->label('Ответ')->required(),
                                             Forms\Components\Toggle::make('is_correct')->label('Правильный?'),
                                         ])
-                                        ->minItems(4)
-                                        ->maxItems(4)
+                                        ->minItems(1)
+                                        ->maxItems(5)
                                         ->columns(1),
                                 ]),
 
@@ -66,8 +74,8 @@ class QuestionResource extends Resource
                                             Textarea::make('answer.kg')->label('Жооп')->required(),
                                             Forms\Components\Toggle::make('is_correct')->label('Туурабы?'),
                                         ])
-                                        ->minItems(4)
-                                        ->maxItems(4)
+                                        ->minItems(1)
+                                        ->maxItems(5)
                                         ->columns(1),
                                 ]),
                         ])
