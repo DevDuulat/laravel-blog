@@ -131,27 +131,42 @@
                         </template>
                     </div>
 
-                    <div class="mt-10" x-show="activeTab === 'results'">
-                        <h2 class="text-xl font-semibold text-center mb-6">{{ __('messages.test_results') }}</h2>
+                        <div class="mt-10" x-show="activeTab === 'results'">
+                            <h2 class="text-xl font-semibold text-center mb-6">{{ __('messages.test_results') }}</h2>
 
-                        <div class="flex flex-wrap justify-center gap-6">
-                            @foreach($testResults as $result)
-                                @php
-                                    $percentage = round(($result->score / $result->total) * 100);
-                                    $isSuccess = $percentage >= 90;
-                                @endphp
-                                <div class="flex flex-col items-center p-5 w-full md:max-w-[280px] text-center rounded-xl shadow-md {{ $isSuccess ? 'bg-green-100' : 'bg-red-100' }}">
-                                    <h3 class="text-lg font-bold">{{ $result->test->title }}</h3>
-                                    <p class="text-sm mt-2">{{ __('messages.test_results') }}: <strong>{{ $result->score }}/{{ $result->total }}</strong></p>
-                                    <p class="text-xs text-gray-500 mt-1">{{ $result->created_at->format('d.m.Y H:i') }}</p>
-                                    <a href="{{ url('/test/' . $result->test_id) }}"
-                                       class="mt-4 px-3 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500">
-                                        {{ __('messages.retry_test') }}
-                                    </a>
-                                </div>
-                            @endforeach
+                            <div class="flex flex-wrap justify-center gap-6">
+                                @forelse($testResults as $result)
+                                    @php
+                                        $percentage = round(($result->score / max($result->total, 1)) * 100);
+                                        $isSuccess = $percentage >= 90;
+                                    @endphp
+
+                                    <div class="flex flex-col items-center p-5 w-full md:max-w-[280px] text-center rounded-xl shadow-md {{ $isSuccess ? 'bg-green-100' : 'bg-red-100' }}">
+                                        <h3 class="text-lg font-bold">
+                                            {{ $result->test?->title ?? __('messages.test_deleted') }}
+                                        </h3>
+
+                                        <p class="text-sm mt-2">
+                                            {{ __('messages.test_results') }}: <strong>{{ $result->score }}/{{ $result->total }}</strong>
+                                        </p>
+
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            {{ $result->created_at->format('d.m.Y H:i') }}
+                                        </p>
+
+                                        @if ($result->test)
+                                            <a href="{{ url('/test/' . $result->test_id) }}"
+                                               class="mt-4 px-3 py-2 bg-orange-400 text-white rounded-lg hover:bg-orange-500">
+                                                {{ __('messages.retry_test') }}
+                                            </a>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <p class="text-gray-500 text-center w-full">{{ __('messages.no_test_results') }}</p>
+                                @endforelse
+                            </div>
                         </div>
-                    </div>
+
                 </section>
             </div>
 
