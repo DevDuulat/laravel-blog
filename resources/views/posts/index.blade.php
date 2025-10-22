@@ -11,9 +11,10 @@
 
 
                         <div class="flex flex-col lg:flex-row bg-white p-6 rounded-lg shadow-md transition-transform duration-200 ease-in-out hover:-translate-y-1 hover:shadow-lg">
-                                <div class="w-full h-48 lg:hidden">
-                                    <img src="{{ asset('storage/' . $post->cover) }}" alt="" class="object-cover w-full h-full rounded-lg"/>
-                                </div>
+                             <div class="w-full h-48 lg:hidden">
+    <img src="{{ $post->cover }}" alt="" class="object-cover w-full h-full rounded-lg"/>
+</div>
+
                                 <div class="flex flex-col gap-4 flex-1">
                                     <h3 class="text-xl font-semibold text-gray-800">{{ $post->title }}</h3>
                                     <p class="text-gray-600 text-sm">{{ \Str::limit(strip_tags($post->content), 150) }}</p>
