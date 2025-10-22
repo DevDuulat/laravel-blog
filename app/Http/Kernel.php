@@ -46,6 +46,10 @@ class Kernel extends HttpKernel
         ],
     ];
 
+    protected $commands = [
+        \App\Console\Commands\ImportRoadSigns::class,
+    ];
+
     /**
      * The application's middleware aliases.
      *
