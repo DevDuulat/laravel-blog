@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ContentController extends Controller
 {
@@ -74,18 +75,26 @@ class ContentController extends Controller
 
         $categorySlug = $slugMap[$locale] ?? 'dorozhnye-znaki';
 
-        $category = Category::where("slug->{$locale}", $categorySlug)->firstOrFail();
+        $category = Cache::remember("traffic.category.$locale", 3600, function () use ($locale, $categorySlug) {
+            return Category::where("slug->{$locale}", $categorySlug)->firstOrFail();
+        });
 
-        $subcategories = Category::where('parent_id', $category->id)->get();
+        $subcategories = Cache::remember("traffic.subcategories.$locale", 3600, function () use ($category) {
+            return Category::where('parent_id', $category->id)->get();
+        });
 
-        $contents = Content::whereIn('category_id', $subcategories->pluck('id')->toArray())
-            ->where('type', 'page')
-            ->where('status', 'published')
-            ->orderBy('published_at', 'desc')
-            ->get();
+        $contents = Cache::remember("traffic.contents.$locale", 3600, function () use ($subcategories) {
+            return Content::whereIn('category_id', $subcategories->pluck('id')->toArray())
+                ->where('type', 'page')
+                ->where('status', 'published')
+                ->orderBy('published_at', 'desc')
+                ->get();
+        });
 
         return view('pages.pdd-section', compact('contents', 'subcategories'));
     }
+
+
 
 
     public function roadMarkings()
