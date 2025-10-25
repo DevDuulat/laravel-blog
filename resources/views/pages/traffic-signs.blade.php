@@ -25,14 +25,13 @@
                         $title = $item->getTranslatedTitle();
                         $slug = $item->getTranslatedSlug();
                         $content = $item->getTranslatedContent();
-                        $image = asset('storage/' . $item->cover);
                         $short = Str::limit(strip_tags($content), 100);
                     @endphp
 
                     @if ($slug)
                         <a href="{{ route('pages.show', ['slug' => $slug]) }}"
                            class="block bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-                            <img src="{{ asset('storage/' . $image) }}" alt="{{ $title }}" class="w-full h-48 object-cover">
+                            <img src="{{ asset('storage/' . $item->cover) }}" alt="{{ $title }}" class="w-full h-48 object-cover">
                             <div class="p-4">
                                 <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $title }}</h3>
                                 <p class="text-sm text-gray-600">{{ $short }}</p>
