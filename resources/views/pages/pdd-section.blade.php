@@ -25,7 +25,7 @@
             <div x-show="activeCategory === 'all'" x-cloak x-transition>
                 <h2 class="text-2xl font-semibold mb-4">{{ __('messages.all_road_signs') }}</h2>
 
-                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
                     @foreach ($contents as $item)
                         @php
                             $title = $item->getTranslatedTitle();
@@ -59,7 +59,7 @@
                         {{ $subcategory->getTranslation('name', app()->getLocale()) }}
                     </h2>
 
-                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
                         @foreach ($contents->where('category_id', $subcategory->id) as $item)
                             @php
                                 $title = $item->getTranslatedTitle();
