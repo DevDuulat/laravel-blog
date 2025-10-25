@@ -25,7 +25,7 @@
             <div x-show="activeCategory === 'all'" x-cloak x-transition>
                 <h2 class="text-2xl font-semibold mb-4">{{ __('messages.all_road_signs') }}</h2>
 
-                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
                     @foreach ($contents as $item)
                         @php
                             $title = $item->getTranslatedTitle();
@@ -38,7 +38,9 @@
                         @if ($slug)
                             <a href="{{ route('pages.show', ['slug' => $slug]) }}"
                                class="block bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-                                <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-48 object-cover">
+                                <div class="w-full min-h-[200px] overflow-hidden rounded-lg">
+                                    <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-full object-contain">
+                                </div>
                                 <div class="p-4">
                                     <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $title }}</h3>
                                     <p class="text-sm text-gray-600">{{ $short }}</p>
@@ -50,14 +52,14 @@
 
             </div>
 
-            {{-- 🔹 По подкатегориям (без пагинации, фильтрация через Alpine.js) --}}
+            {{-- 🔹 По подкатегориям --}}
             @foreach ($subcategories as $subcategory)
                 <div x-show="activeCategory === '{{ $subcategory->id }}'" x-cloak x-transition>
                     <h2 class="text-2xl font-semibold mb-4">
                         {{ $subcategory->getTranslation('name', app()->getLocale()) }}
                     </h2>
 
-                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                         @foreach ($contents->where('category_id', $subcategory->id) as $item)
                             @php
                                 $title = $item->getTranslatedTitle();
@@ -70,7 +72,9 @@
                             @if ($slug)
                                 <a href="{{ route('pages.show', ['slug' => $slug]) }}"
                                    class="block bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-                                    <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-48 object-cover">
+                                    <div class="aspect-square w-full overflow-hidden">
+                                        <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-full object-cover">
+                                    </div>
                                     <div class="p-4">
                                         <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $title }}</h3>
                                         <p class="text-sm text-gray-600">{{ $short }}</p>
