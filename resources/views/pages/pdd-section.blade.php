@@ -59,7 +59,7 @@
                         {{ $subcategory->getTranslation('name', app()->getLocale()) }}
                     </h2>
 
-                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
                         @foreach ($contents->where('category_id', $subcategory->id) as $item)
                             @php
                                 $title = $item->getTranslatedTitle();
