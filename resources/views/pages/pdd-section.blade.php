@@ -73,7 +73,7 @@
                                 <a href="{{ route('pages.show', ['slug' => $slug]) }}"
                                    class="block bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition overflow-hidden">
                                     <div class="aspect-square w-full overflow-hidden">
-                                        <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-full object-contain">
                                     </div>
                                     <div class="p-4">
                                         <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $title }}</h3>
