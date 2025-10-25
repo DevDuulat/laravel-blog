@@ -86,8 +86,8 @@
 
                 <div class="flex flex-col justify-between h-full p-6 bg-white rounded-2xl shadow-lg transition duration-300 hover:shadow-xl hover:-translate-y-1">
                     <div class="flex flex-col gap-3">
-                        <h3 class="text-lg font-bold text-gray-900">{{ __('messages.pdd_2024_title') }}</h3>
-                        <p class="text-gray-600 text-sm">{{ __('messages.pdd_2024_desc') }}</p>
+                        <h3 class="text-lg font-bold text-gray-900">{{ __('messages.pdd_2025_title') }}</h3>
+                        <p class="text-gray-600 text-sm">{{ __('messages.pdd_2025_desc') }}</p>
                     </div>
                     <a href="{{ route('pages.show', 'pdd-kr-2024') }}"
                        class="mt-6 inline-block text-center px-5 py-2 font-medium text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition">
