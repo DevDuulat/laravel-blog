@@ -27,8 +27,8 @@
                         </svg>
                     </button>
                     <div class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 border border-gray-100">
-                            <a href="{{ route('pages.show', 'pdd-kr-2024') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
-                                {{ __('messages.pdd_2024_title') }}
+                            <a href="{{ route('pages.show', 'pdd-kr-2025') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
+                                {{ __('messages.pdd_2025_title') }}
                             </a>
                             <a href="{{ route('traffic.signs') }}" class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500">
                                 {{ __('messages.traffic_signs_title') }}

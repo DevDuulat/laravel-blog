@@ -25,7 +25,7 @@
             <div x-show="activeCategory === 'all'" x-cloak x-transition>
                 <h2 class="text-2xl font-semibold mb-4">{{ __('messages.all_road_signs') }}</h2>
 
-                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
+                <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
                     @foreach ($contents as $item)
                         @php
                             $title = $item->getTranslatedTitle();
@@ -59,7 +59,7 @@
                         {{ $subcategory->getTranslation('name', app()->getLocale()) }}
                     </h2>
 
-                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
+                    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
                         @foreach ($contents->where('category_id', $subcategory->id) as $item)
                             @php
                                 $title = $item->getTranslatedTitle();
@@ -73,7 +73,7 @@
                                 <a href="{{ route('pages.show', ['slug' => $slug]) }}"
                                    class="block bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition overflow-hidden">
                                     <div class="aspect-square w-full overflow-hidden">
-                                        <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset($image) }}" alt="{{ $title }}" class="w-full h-full object-contain">
                                     </div>
                                     <div class="p-4">
                                         <h3 class="text-lg font-bold text-gray-900 mb-2">{{ $title }}</h3>
