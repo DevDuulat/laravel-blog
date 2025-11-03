@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Models\Faq;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
