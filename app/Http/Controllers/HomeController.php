@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Models\Faq;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -16,10 +15,11 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        $pages = Content::where('type', 'page')
+        $pages = Content::select('id', 'title', 'slug', 'published_at')
+            ->where('type', 'page')
             ->where('status', 'published')
-            ->orderBy('published_at', 'desc')
-            ->take(3)
+            ->orderByDesc('published_at')
+            ->limit(3)
             ->get();
         $faqs = Faq::orderBy('created_at', 'desc')
             ->take(4)
