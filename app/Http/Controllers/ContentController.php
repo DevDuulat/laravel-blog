@@ -87,7 +87,7 @@ class ContentController extends Controller
             return Content::whereIn('category_id', $subcategories->pluck('id')->toArray())
                 ->where('type', 'page')
                 ->where('status', 'published')
-                ->orderBy('published_at', 'desc')
+                ->orderBy('published_at', 'asc')
                 ->get();
         });
 
@@ -115,7 +115,7 @@ class ContentController extends Controller
         $contents = Content::whereIn('category_id', $subcategories->pluck('id')->toArray())
             ->where('type', 'page')
             ->where('status', 'published')
-            ->orderBy('published_at', 'desc')
+            ->orderBy('published_at', 'asc')
             ->get();
 
         return view('pages.pdd-section', compact('contents', 'subcategories'));
