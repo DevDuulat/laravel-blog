@@ -6,6 +6,7 @@
     <title>{{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5174957124050822" crossorigin="anonymous"></script>
 </head>
 <body class="pt-20">
 @include('components.header')
